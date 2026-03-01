@@ -1,9 +1,5 @@
 from ..Bibliotecas.Lib1 import *
 
-    #Um fato importante é que: computação numérica no geral costuma tomar dados do tipo double para melhor precisão,
-    #mas devido ao caratér educativo das listas usarei float para melhor eficiência do código, mesmo que com uma
-    #precisão piorada;
-
     #Tabela de questões ->
     #a) Calcule a amplitude interquartilica dos dados brutos;
     #b) Julgue possiveis outliers utilizando o Criterio de Box;
@@ -16,35 +12,34 @@ from ..Bibliotecas.Lib1 import *
     #h) Julgue se essa distribuicao de dados pode ser ou nao considerada como aproximadamente normal e justifique sua conclusao
 
 def main() -> None:
-    data = [21,21,42,49,49,51,51,58,58,58,60,61,61,61,67,71,71,73,75,98]
-    L = data.copy()
-    #Setando os dados da lista;
-    Q1 = separatriz(L,0.25)
-    Q3 = separatriz(L,0.75)
-    I = IQR(Q3,Q1)
-    m = media(L)
-    DP = desvio_padrao(L,m)
-    #Julgamento pelo criterio da varianca (regra empirica - 68,95,99.7);
-    print(criterio_da_var(L,m,DP))
-    # Julgamento pelo criterio de Box;
-    print(criterio_de_box(L,I,Q1,Q3))
-    #Calculo da nova mediana, mediana antiga x nova
-    print(mediana(L))
-    k = criterio_de_box(L,I,Q1,Q3)
-    for i in L:
-        for j in k:
-            if i == j:
-                L.remove(i)
-    print(mediana(L))
-    #Fazendo o box plot
-    box_plot(L)
-    #Fazendo a assimetria
-    print(assimetria(m,mediana(L),DP))
-    #Fazendo a curtose
-    print(curtose(momento_central_amostral(L,2,m),momento_central_amostral(L,4,m)))
-
-    #Pelos valores da curtose de ~ 3.8 e assimetria de ~ -0.2 chegamos a conclusão que a distribuição é
-    #aproximadamente normal pois sua curtose está próxima de 3 e sua assimetria de 0, portanto a distribuição é
-    #aproximadamente normal;
+    dados = [21, 21, 42, 49, 49, 51, 51, 58, 58, 58, 60, 61, 61, 61, 67, 71, 71, 73, 75, 98]
     
+    #item a)
+    #print(IQR(Separatriz(dados,0.25),Separatriz(dados,0.75)))
+
+    #item b)
+    #print(Criterio_Box(dados,IQR(Separatriz(dados,0.25),Separatriz(dados,0.75)),Separatriz(dados,0.25),Separatriz(dados,0.75)))
+
+    #item c)
+    #Nesse item precisamos de uma análise mais qualitativa do que quantitativa de fato. O que ocorre é que. devido à natureza discreta dos dados,
+    #o critério da variancia não identifica 98 como outlier espúrio pois a quantidade de dados é muito pequena, mas caso plotemos os dados utilizando
+    #um box plot ou ferramenta de visualização mais específica, podemos ver que, apesar de ser outlier, o 21 não é espúrio, então editando o dataset
+    #obtemos:
+    #dados.remove(98)
+
+    #item d)
+    #print(IQR(Separatriz(dados,0.25),Separatriz(dados,0.75)),Mediana(dados),end="\n")
+
+    #item e)
+    #Box_Plot(dados)
+
+    #item f)
+    #print(Assimetria(Separatriz(dados,0.75),Separatriz(dados,0.25),Mediana(dados)))
+
+    #item g)
+    #print(Curtose(IQR(Separatriz(dados,0.25),Separatriz(dados,0.75)),Separatriz(dados,0.9),Separatriz(dados,0.1)))
+    
+    #item h)
+    #A distribuição não é aproximadamente normal pois não é mesocúrtica (Curtose<0.263).
+
 main()
