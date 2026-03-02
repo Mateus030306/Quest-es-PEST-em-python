@@ -1,5 +1,6 @@
 from math import floor
 import matplotlib.pyplot as plt
+from math import log10
 
 #Implementaçao das funções feitas com o formulário no final da lista em mente;
 
@@ -73,3 +74,69 @@ def Desvio_Padrao(data: list, media: float) -> float:
     """Retorna o desvio padrão (Sem o critério de correção de bessel, desvio populacional). """
     DP = sum((i-media)**2 for i in data)
     return (DP/len(data))**0.5;
+
+def Selection_Sort(data: list) -> None:
+    """Ordena a lista utilizando o método de ordenação por seleção. """
+    for i in range(len(data)-1):
+        for j in range(i,len(data)):
+            if(data[i]>data[j]):
+                temp = data[i]
+                data[i] = data[j]
+                data[j] = temp;
+
+def Regra_Sturges(tamanho: int) -> float:
+    """Calcula a quantidade de classes de uma lista pela regra de sturges. """
+    return (1+3.3*log10(tamanho));
+
+def Moda(data: list) -> int:
+    """Utiliza conjuntos e um contador para calcular a moda. Não funciona em dados multimodais. """
+    c = set(data)
+    cont = []
+    for i in c:
+        count = 0
+        for j in data:
+            if i==j: count +=1
+        cont.append((i,count))
+    m = cont[0][1]
+    moda = cont[0][0]
+    for i, j in cont:
+        if j>m:
+            m = j
+            moda = i
+    return moda;
+
+def Dist_Freq(data: list) -> list:
+    """Devolve uma lista com elementos [(i-ésimo dado, i-ésima frequência absoluta)]"""
+    c = set(data)
+    cont = []
+    for i in c:
+        count = 0
+        for j in data:
+            if i==j: count +=1
+        cont.append([i,count])
+    return cont;
+
+def Freq_Acul(dist_freq: list) -> list:
+    """Recebe uma lista de (i-ésimo dado, i-ésima frequência abs) e devolve uma lista com
+    a frequência absoluta acumulada do i-ésimo dado da amostra. """
+    for i in range(1,len(dist_freq)):
+        dist_freq[i][1] = dist_freq[i][1]+dist_freq[i-1][1]
+    return dist_freq;
+
+def Var_Per(desvio: float, media: float) -> float:
+    """Calcula o Coeficiente de variação percentual (Desvio padrão relativo) da amostra. (Devolve em decimais)"""
+    return desvio/media;
+
+def Amplitude(data: list) -> float:
+    """Calcula o limite superior e inferior da amostra e retorna a amplitude. """
+    mai = data[0]
+    men = data[0]
+    for i in data:
+        if i > mai: mai = i
+        if i < men: men = i
+    return mai-men;
+
+def Variancia(data: list, media: float) -> float:
+    """Calcula a variância amostral. """
+    v = sum((i-media)**2 for i in data)
+    return v/(len(data)-1);
