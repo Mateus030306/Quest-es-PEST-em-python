@@ -20,3 +20,11 @@ def teste_t(tam: int, r: float) -> float:
 def erro_padrao_med(tam: int, r: float) -> float:
     """Calcula o erro padrão da média da amostra. """
     return sqrt((1-(r**2))/(tam-2));
+
+def estimadorbeta1(covariancia: float, var_x: float) -> float:
+    """Devolve o estimador beta1 da reta de mínimos quadrados. Recebe covariância e variância marginal de x. """
+    return covariancia/var_x;
+
+def estimadorbeta0(tam: int, soma_x: float, soma_y: float, beta1: float) -> float:
+    """Devolve o estimador beta0 da reta de mínimos quadradados. Recebe tamanho, soma de x e y da amostra e o estimador beta 1. """
+    return (soma_y-soma_x*beta1)/tam;
