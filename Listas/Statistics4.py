@@ -73,4 +73,21 @@ def main() -> None:
     #Pelo valor de r², apesar de a reta de regressão existir e ter poder preditivo, seu poder preditivo é baixo (inferior ao considerado satisfatório)
     #pois apenas 85% dos dados são explicados pela reta, já que r² = 0.85 então r² não está em [0.9, 1]
 
+    #item i)
+    #Não, pois a reta de regressão tem baixo poder preditivo devido a r²<0.9
+
+    #item j)
+    #Quanto ao sinal, por ser >0, a correlação evidencia uma proporcionalidade positiva entre as variáveis, evidenciando que à medida que uma cresce,
+    #a outra também cresce. Quanto ao módulo de r, evidencia uma correlação forte, pois 0.9<=r<=1
+
+    #item k)
+    cvc = sqrt(var_marg_C)/MediaSimples(df.loc[1:8,"xi"].set_axis(range(8))) #type: ignore #Coeficiente de variacao percentual de CO2
+    cvp = sqrt(var_marg_P)/MediaSimples(df.loc[1:8,"yi"].set_axis(range(8))) #type: ignore #Coeficiente de variacao percentual da produção
+    #print("Concentracao de CO2 mais dispersa. ") if cvc>cvp else print("Producao mais dispersa. ")
+
+    #item l)
+    b1 = estimadorbeta1(cov, var_marg_C)
+    b0 = estimadorbeta0(tamanho_amostra,df.at["Soma","xi"],df.at["Soma","yi"], b1) #type: ignore
+    #print(f"Estimativa de {b1*80+b0} de produção quando a concentração de carbono ser 80mol/l. ")
+
 main()
